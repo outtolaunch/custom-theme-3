@@ -5,7 +5,7 @@ bower_components
 node_modules
 npm-debug.log
 
-# matthew's declarations
+# custom declarations
 lang
 .bowerrc
 .editorconfig
