@@ -21,8 +21,3 @@ LICENSE.md
 package.json
 README.md
 ruleset.xml
-
-assets/fonts/.gitkeep
-assets/images/.gitkeep
-assets/styles
-assets/manifest.json
