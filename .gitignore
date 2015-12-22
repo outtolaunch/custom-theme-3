@@ -1,0 +1,28 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+dist
+bower_components
+node_modules
+npm-debug.log
+
+# matthew's declarations
+lang
+.bowerrc
+.editorconfig
+.jscsrc
+.jshintrc
+.travis.yml
+bower.json
+CHANGELOG.md
+composer.json
+CONTRIBUTING.md
+gulpfile.js
+LICENSE.md
+package.json
+README.md
+ruleset.xml
+
+assets/fonts/.gitkeep
+assets/images/.gitkeep
+assets/styles
+assets/manifest.json
