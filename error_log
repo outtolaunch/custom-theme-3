@@ -1,0 +1,1 @@
+[23-Dec-2015 09:27:02 UTC] PHP Fatal error:  Call to undefined function get_template_part() in /home/tolaunch/public_html/sitev03/wp-content/themes/rhb3/index.php on line 1
