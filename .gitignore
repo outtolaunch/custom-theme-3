@@ -12,6 +12,7 @@ lang
 .jscsrc
 .jshintrc
 .travis.yml
+.png
 bower.json
 CHANGELOG.md
 composer.json
