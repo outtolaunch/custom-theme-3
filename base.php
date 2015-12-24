@@ -13,6 +13,10 @@ use Roots\Sage\Wrapper;
           </div>
         <![endif]-->
 
+        <style>
+        
+        </style>
+
         <?php
           do_action('get_header');
           get_template_part('templates/header');
@@ -39,6 +43,8 @@ use Roots\Sage\Wrapper;
           get_template_part('templates/footer');
           wp_footer();
         ?>
-    <link rel='stylesheet' href='http://72.52.171.206/sitev03/wp-content/themes/rhb3/custom.css' type='text/css' media='all' />
+
+        <link rel='stylesheet' href='http://72.52.171.206/sitev03/wp-content/themes/custom-theme-3/custom.css' type='text/css' media='all' />
+
     </body>
 </html>
