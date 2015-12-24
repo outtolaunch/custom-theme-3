@@ -27,6 +27,12 @@ foreach ($sage_includes as $file) {
 }
 unset($file, $filepath);
 
+// link to page that builds theme options
+// require_once(TEMPLATEPATH . '/theme-options/admin-menu.php');
+
+// hide admin bar on front end
+show_admin_bar( false );
+
 /*---------- Register sidebars --------------*/
 /* by introducing our own custom sidebars, */
 /* we can keep consistency, as well as ease in cloning content */
@@ -34,7 +40,7 @@ unset($file, $filepath);
 // header call to action area
 register_sidebar(array(
   'name'      =>  __( 'RHB - Top Header' ),
-  'id'      =>  'top-header-widget',
+  'id'      =>  'rhb-header',
   'description' =>  __( 'Call to action, "insurance accepted" and phone number' ),
   'before_widget' =>  '',
   'after_widget'  =>  '',
@@ -45,7 +51,7 @@ register_sidebar(array(
 // lead gen form
 register_sidebar(array(
   'name'      =>  __( 'RHB - Lead Gen Form' ),
-  'id'      =>  'lead-gen-form',
+  'id'      =>  'rhb-lead-gen-form',
   'description' =>  __( 'Lead gen form, list menus' ),
   'before_widget' =>  '<div class="et_pb_widget">',
   'after_widget'  =>  '</div>',
@@ -53,10 +59,21 @@ register_sidebar(array(
   'after_title' =>  '</h4>'
 ));
 
+// default sidebar
+register_sidebar(array(
+  'name'      =>  __( 'RHB - Primary Sidebar' ),
+  'id'      =>  'rhb-primary',
+  'description' =>  __( '' ),
+  'before_widget' =>  '',
+  'after_widget'  =>  '',
+  'before_title'  =>  '',
+  'after_title' =>  ''
+));
+
 // footer widget #1
 register_sidebar(array(
   'name'      =>  __( 'RHB - Footer Area #1' ),
-  'id'      =>  'footer-widget-area-1',
+  'id'      =>  'rhb-footer-area-1',
   'description' =>  __( '' ),
   'before_widget' =>  '<div class="et_pb_widget">',
   'after_widget'  =>  '</div>',
@@ -67,7 +84,7 @@ register_sidebar(array(
 // footer widget #2
 register_sidebar(array(
   'name'      =>  __( 'RHB - Footer Area #2' ),
-  'id'      =>  'footer-widget-area-2',
+  'id'      =>  'rhb-footer-area-2',
   'description' =>  __( '' ),
   'before_widget' =>  '<div class="et_pb_widget">',
   'after_widget'  =>  '</div>',
@@ -78,7 +95,7 @@ register_sidebar(array(
 // footer widget #3
 register_sidebar(array(
   'name'      =>  __( 'RHB - Footer Area #3' ),
-  'id'      =>  'footer-widget-area-3',
+  'id'      =>  'rhb-footer-area-3',
   'description' =>  __( '' ),
   'before_widget' =>  '<div class="et_pb_widget">',
   'after_widget'  =>  '</div>',
@@ -89,7 +106,7 @@ register_sidebar(array(
 // footer widget #4
 register_sidebar(array(
   'name'      =>  __( 'RHB - Footer Area #4' ),
-  'id'      =>  'footer-widget-area-4',
+  'id'      =>  'rhb-footer-area-4',
   'description' =>  __( '' ),
   'before_widget' =>  '<div class="et_pb_widget">',
   'after_widget'  =>  '</div>',
@@ -100,7 +117,7 @@ register_sidebar(array(
 // footer bottom widget area
 register_sidebar(array(
   'name'      =>  __( 'RHB - Bottom Footer' ),
-  'id'      =>  'bottom-footer-widget',
+  'id'      =>  'rhb-bottom-footer',
   'description' =>  __( 'Privacy, terms and sitemap links' ),
   'before_widget' =>  '',
   'after_widget'  =>  '',
@@ -119,84 +136,80 @@ function remove_some_widgets(){
 }
 add_action( 'widgets_init', 'remove_some_widgets', 11 );
 
-/*---------- Creates custom theme options page --------------*/
-add_action( 'admin_menu', 'custom_theme_options_page' );
+/*---------- Adds theme sections and settings to customizer --------------*/
+function rhb_theme_customizer( $wp_customize ) {
+    // add logo section and settings
+    $wp_customize->add_section('theme_logo_section', array(
+        'title'       => __('Logo', 'custom-logo'),
+        'priority'    => 30,
+        'description' => 'Upload a custom logo',
+    ));
+    $wp_customize->add_setting('theme_logo');
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'theme_logo', array(
+        'label'    => __( 'Logo', 'custom-logo' ),
+        'section'  => 'theme_logo_section',
+        'settings' => 'theme_logo',
+    )));
 
-function custom_theme_options_page() {
-  add_theme_page( 'Custom Theme Options', 'Theme Options', 'manage_options', 'custom-theme-options', 'custom_theme_options' );
+    // adds RHB theme section and settings
+    $wp_customize->add_section('rhb_theme_section' , array(
+        'title'       => __('RHB Theme Options', 'rhb-theme-settings'),
+        'priority'    => 30,
+        'description' => 'Various theme settings for the RHB custom theme',
+    ) );
+    $wp_customize->add_setting('rhb_phone_number', array(
+        'default' => '(000) 000-0000',
+    ));
+    $wp_customize->add_control('rhb_phone_number', array(
+        'label'    => __( 'Phone Number', 'rhb-theme-settings' ),
+        'section'  => 'rhb_theme_section',
+        'settings' => 'rhb_phone_number',
+    ));
 }
-
-function custom_theme_options() {
-  if ( !current_user_can( 'manage_options' ) )  {
-    wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-  }
-
-  ?>
-<div class="wrap">
-<h1>Custom Theme Options Panel</h1>
-<form method="post" action="options.php">
-<?php
-    settings_fields("section");
-    do_settings_sections("theme-options");
-    submit_button();
-?>
-</form>
-</div>
-<?php
-}
-
-function display_custom_phone_number() {
-    ?>
-        <input type="text" name="custom_phone_number" id="custom_phone_number" value="<?php echo get_option('custom_phone_number'); ?>" />
-    <?php
-}
-
-function display_theme_panel_fields() {
-    add_settings_section("section", "All Settings", null, "theme-options");
-    add_settings_field("custom_phone_number", "Custom Phone Number", "display_custom_phone_number", "theme-options", "section");
-    register_setting("section", "custom_phone_number");
-}
-add_action("admin_init", "display_theme_panel_fields");
-
+add_action( 'customize_register', 'rhb_theme_customizer' );
 
 /*---------- Creates shortcodes for phone number --------------*/
 // adds a new shortcode [base]
 function base() {
-  return site_url();
+    return site_url();
 }
 add_shortcode('base', 'base');
 
 // outputs the bare phone number with class [phone]
-function et_phone_number( $atts ) {
-  $options = get_option('custom_phone_number');
-  $output = '<span class="inlinePhoneNumber">' . $options . '</span>';
-  return $output;
+function rhb_phone_number($atts) {
+    $options = get_theme_mod('rhb_phone_number');
+    $output = '<span class="inlinePhoneNumber">' . $options . '</span>';
+    return $output;
 }
-add_shortcode('phone', 'et_phone_number');
+add_shortcode('phone', 'rhb_phone_number');
 
 // outputs the bare phone number with class [phonebare]
-function et_phone_number_homebutton( $atts ) {
-  $themePhoneNumber = get_option('custom_phone_number');
-  $themePhoneBare = strtr($themePhoneNumber, array('(' => '', ')' => '', '-' => '', ' ' => ''));
-  $output = $themePhoneBare;
-  return $output;
+function rhb_phone_number_homebutton($atts) {
+    $themePhoneNumber = get_theme_mod('rhb_phone_number');
+    $themePhoneBare = strtr($themePhoneNumber, array('(' => '', ')' => '', '-' => '', ' ' => ''));
+    $output = $themePhoneBare;
+    return $output;
 }
-add_shortcode('phonebare', 'et_phone_number_homebutton');
+add_shortcode('phonebare', 'rhb_phone_number_homebutton');
 
 // clickable phone number [phonelink]
-function et_phone_number_linkable( $atts ) {
-  $themePhoneNumber = get_option('custom_phone_number');
-  $themePhoneBare = strtr($themePhoneNumber, array('(' => '', ')' => '', '-' => '', ' ' => ''));
-  $output = '<a href="tel:+1' . $themePhoneBare . '" class="inlinePhoneLink">' . $themePhoneNumber . '</a>';
-  return $output;
+function rhb_phone_number_linkable($atts) {
+    $themePhoneNumber = get_theme_mod('rhb_phone_number');
+    $themePhoneBare = strtr($themePhoneNumber, array('(' => '', ')' => '', '-' => '', ' ' => ''));
+    $output = '<a href="tel:+1' . $themePhoneBare . '" class="inlinePhoneLink">' . $themePhoneNumber . '</a>';
+    return $output;
 }
-add_shortcode('phonelink', 'et_phone_number_linkable');
+add_shortcode('phonelink', 'rhb_phone_number_linkable');
 
 // clickable phone number with text inside [phonewrap]Call [phone] Today!![/phonewrap]
-function phonewrap( $atts, $content = null ) {
-  $themePhoneNumber = get_option('custom_phone_number');
-  $themePhoneBare = strtr($themePhoneNumber, array('(' => '', ')' => '', '-' => '', ' ' => ''));
-  $output = '<a href="tel:+1' . $themePhoneBare . '" class="inlinePhoneLink">' . do_shortcode($content) . '</a>';
-  return $output;
+function phonewrap($atts, $content = null) {
+    $themePhoneNumber = get_theme_mod('rhb_phone_number');
+    $themePhoneBare = strtr($themePhoneNumber, array('(' => '', ')' => '', '-' => '', ' ' => ''));
+    $output = '<a href="tel:+1' . $themePhoneBare . '" class="inlinePhoneLink">' . do_shortcode($content) . '</a>';
+    return $output;
 }
 add_shortcode('phonewrap', 'phonewrap');
+
+// shortcodes don't render in wigets by default
+// this helps them do so
+add_filter('widget_text', 'do_shortcode');
