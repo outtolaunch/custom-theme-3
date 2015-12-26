@@ -23,6 +23,12 @@ header .headerInnerWrapper {
     padding-right: 40px;
     padding-left: 40px;
 }
+@media (max-width: 480px) {
+    header .headerInnerWrapper {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+}
 img {
     max-width: 100%;
 }
@@ -31,6 +37,12 @@ footer .footerInnerWrapper {
     padding-bottom: 14px;
     padding-right: 40px;
     padding-left: 40px;
+}
+@media (max-width: 480px) {
+    footer .footerInnerWrapper {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
 }
 footer .textwidget {
     margin-bottom: 24px;
@@ -52,6 +64,13 @@ footer .textwidget {
     padding-right: 40px;
     padding-left: 40px;
 }
+@media (max-width: 480px) {
+    .container.bodyWrap {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+}
+
 .main,
 .sidebar,
 .sidebar-primary .main {
