@@ -1,9 +1,9 @@
 <header>
-    <div class="container topHeader">
+    <div class="container headerInnerWrapper">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12">
 
-                <div class="headerContainer container-fluid">
+                <div class="headerContainer">
                     <div class="row">
                         <div class="col-md-6 col-md-6 col-sm-6 col-xs-12 headerLogo">
                             <?php if ( get_theme_mod( 'theme_logo' ) ) : ?>
@@ -21,7 +21,8 @@
     </div>
 
     <nav class="navbar navbar-default" role="navigation">
-        <div class="container wrapper">
+        <div class="container navWrap">
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -37,14 +38,11 @@
                 endif;
                 ?>
             </div>
+
         </div>
-        </nav>
-</header>
-<?php if( is_front_page() ) : ?>
-
-<div class="headerBanner"></div>
-
-<div id="myCarousel" class="carousel slide" data-ride="carousel" style="display:none;">
+    </nav>
+</header><div class="headerBanner" style="display:none;"></div><?php if( is_front_page() ) : ?>
+<div id="myCarousel" class="carousel slide" data-ride="carousel" >
   <ol class="carousel-indicators">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
     <li data-target="#myCarousel" data-slide-to="1"></li>
