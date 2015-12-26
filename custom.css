@@ -67,13 +67,15 @@ footer .textwidget {
 
 /*----------------------- nav bar ------------------------*/
 @media (min-width: 768px) and (max-width: 992px) {
-    .container.wrapper {
+    /*.container.wrapper {
         width: auto;
-    }
+    }*/
 }
 @media (min-width: 768px) {
-    .container.navWrap {
-        padding: 0;
+    .navbar.container.navBoxed,
+    .navbar .container.navFullWidth {
+        padding-right: 0;
+        padding-left: 0;
     }
     nav .container-fluid,
     nav #navbar.navbar-collapse.collapse {
@@ -117,6 +119,14 @@ footer .textwidget {
     .callToAction {
         text-align: center;
     }
+}
+.carousel-inner>.item>a>img, 
+.carousel-inner>.item>img {
+    width: 100%;
+}
+.caroselWrapper.container {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /*----------------------- lead gen forms ------------------------*/
